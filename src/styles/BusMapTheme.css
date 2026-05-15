@@ -1,0 +1,57 @@
+/* 1. Nền Mesh Gradient động - Giống hệt header BusMap */
+.busmap-mesh-bg {
+  background-color: #2a9d8f;
+  background-image: 
+    radial-gradient(at 0% 0%, #38b2ac 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #4fd1c5 0px, transparent 50%),
+    radial-gradient(at 100% 100%, #e6fffa 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #2c7a7b 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: mesh-animation 15s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hiệu ứng mây trôi nhẹ nhàng cho nền */
+@keyframes mesh-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 2. Hiệu ứng các khối hình hữu cơ (Blobs) ẩn hiện phía sau */
+.busmap-mesh-bg::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  filter: blur(80px);
+  border-radius: 50%;
+  top: -50px;
+  left: -50px;
+  z-index: 0;
+}
+
+/* 3. Card hiệu ứng kính mờ (Glassmorphism) - Cho phần QR và Modal */
+.glass-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px border rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* 4. Card màu xanh Gradient đặc trưng cho mã QR */
+.qr-container-gradient {
+  background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%);
+  /* Nếu muốn giống BusMap xanh ngọc hơn: */
+  background: linear-gradient(135deg, #64d8cb 0%, #26a69a 100%);
+  position: relative;
+}
+
+/* 5. Hiệu ứng viền phát sáng nhẹ cho Button */
+.btn-glow:active {
+  box-shadow: 0 0 15px rgba(42, 157, 143, 0.5);
+  transform: scale(0.98);
+}
