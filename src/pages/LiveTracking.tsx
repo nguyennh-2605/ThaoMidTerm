@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Phone, MapPin, Bus } from 'lucide-react';
+import { ArrowLeft, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import RatingModal from '../components/support/RatingModal';
 
 // Import Leaflet
-import { MapContainer, TileLayer, Polyline, Marker, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L, { type LatLngTuple } from 'leaflet';
 
@@ -29,7 +29,7 @@ const routePath: LatLngTuple[] = [
 
 export default function LiveTracking() {
   const navigate = useNavigate();
-  const [timeToNextStop, setTimeToNextStop] = useState(2);
+  const [timeToNextStop] = useState(2);
   const [showRatingModal, setShowRatingModal] = useState(false);
 
   const [busLocation, setBusLocation] = useState<LatLngTuple>(routePath[0]);
