@@ -63,102 +63,103 @@ export default function LiveTracking() {
       animationId = requestAnimationFrame(animateBus);
     };
 
-    // Bắt đầu vòng lặp animation
     let animationId = requestAnimationFrame(animateBus);
-
-    // Cleanup khi rời khỏi trang
     return () => cancelAnimationFrame(animationId);
   }, []);
 
   return (
     <Layout showBottomNav={false}>
-      <div className="h-screen flex flex-col bg-white overflow-hidden">
+      {/* Container chính: Flex cột, không cho cuộn toàn trang */}
+      <div className="h-screen flex flex-col bg-white overflow-hidden relative">
         
-        {/* Header */}
-        <div className="bg-white px-4 py-4 flex items-center gap-4 z-10 shadow-sm">
-          <button onClick={() => navigate(-1)} className="p-1">
-            <ArrowLeft className="w-6 h-6 text-gray-800" />
-          </button>
-          <h1 className="text-[16px] font-black text-gray-800 tracking-tight">
-            HÀNH TRÌNH ĐANG DIỄN RA
-          </h1>
-        </div>
+        {/* === PHẦN NỬA TRÊN: HEADER & THÔNG TIN (Tối đa 45% chiều cao) === */}
+        <div className="flex-none flex flex-col max-h-[48vh] z-10 shadow-sm bg-white">
+          
+          {/* Header */}
+          <div className="bg-white px-4 py-3 flex items-center gap-3 shrink-0">
+            <button onClick={() => navigate(-1)} className="p-1.5 hover:bg-gray-100 rounded-full transition-colors">
+              <ArrowLeft className="w-5 h-5 text-gray-800" />
+            </button>
+            <h1 className="text-[15px] font-black text-gray-800 tracking-tight">
+              HÀNH TRÌNH ĐANG DIỄN RA
+            </h1>
+          </div>
 
-        {/* Info Section (Thẻ thông tin phía trên) */}
-        <div className="px-4 py-3 space-y-3 z-10 bg-white">
-          {/* ETA Card */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-r from-[#69c6ab] to-[#46a18d] rounded-[20px] p-4 flex flex-col items-center shadow-sm"
-          >
-            <div className="bg-[#3b877a] text-white px-6 py-1 rounded-lg text-[10px] font-bold mb-1 shadow-inner">
-              TỚI TRẠM TIẾP THEO:
-            </div>
-            <div className="text-[34px] font-bold text-white leading-tight">
-              {timeToNextStop} Phút
-            </div>
-          </motion.div>
-
-          {/* Driver Card */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-[#69c6ab] rounded-[20px] p-4 pt-8 relative shadow-sm"
-          >
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-[#3b877a] text-white px-4 py-1.5 rounded-full text-[10px] font-bold w-max shadow-sm">
-              THÔNG TIN CHUYẾN ĐI & TÀI XẾ
-            </div>
-            
-            <div className="flex gap-3">
-              {/* Ảnh tài xế */}
-              <div className="bg-white rounded-2xl p-1 w-[100px] shadow-sm">
-                <div className="aspect-[3/4] rounded-xl overflow-hidden">
-                  <img 
-                    src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/677785080_2477381316039291_5533075402488695679_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Xs6sOSQJX3gQ7kNvwHkz6tg&_nc_oc=AdpKd2QnrOhX2bukaGF8FEpKpxK-bui01UnJIudTc_hz-ls58Y9QC18S0QlN8XO9tkU&_nc_zt=23&_nc_ht=scontent.fhan14-5.fna&_nc_gid=XzkTbYGm1XZtRWWUQHTQRw&_nc_ss=7b2a8&oh=00_Af7KCbF3byFPHTe-WVrizfGc9TMMdp0L0dlDFFS_Jl3hWg&oe=6A0D13D8" 
-                    alt="Driver" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-[10px] font-bold text-center py-1.5 text-gray-800">
-                  Nguyễn Thanh Thảo
-                </div>
+          {/* Info Section (Cuộn được nếu màn hình quá ngắn) */}
+          <div className="px-4 pb-4 space-y-2.5 sm:space-y-3 overflow-y-auto hide-scrollbar">
+            {/* ETA Card */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-gradient-to-r from-[#69c6ab] to-[#46a18d] rounded-xl sm:rounded-[20px] p-3 sm:p-4 flex flex-col items-center shadow-sm shrink-0"
+            >
+              <div className="bg-[#3b877a] text-white px-5 py-1 rounded-lg text-[10px] font-bold mb-1 shadow-inner">
+                TỚI TRẠM TIẾP THEO:
               </div>
+              <div className="text-[28px] sm:text-[34px] font-bold text-white leading-tight mt-1">
+                {timeToNextStop} Phút
+              </div>
+            </motion.div>
 
-              {/* Thông tin chi tiết */}
-              <div className="flex-1 flex flex-col gap-2">
-                <div className="bg-white/95 rounded-xl p-2.5 shadow-sm">
-                  <p className="text-[10px] text-gray-500 uppercase font-bold">Tài xế:</p>
-                  <p className="text-[13px] font-bold text-gray-900">Nguyễn Thanh Thảo</p>
+            {/* Driver Card */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-[#69c6ab] rounded-xl sm:rounded-[20px] p-3 sm:p-4 pt-7 sm:pt-8 relative shadow-sm shrink-0"
+            >
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-[#3b877a] text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold w-max shadow-sm whitespace-nowrap">
+                THÔNG TIN CHUYẾN ĐI & TÀI XẾ
+              </div>
+              
+              <div className="flex gap-2.5 sm:gap-3">
+                {/* Ảnh tài xế (Responsive width) */}
+                <div className="bg-white rounded-xl sm:rounded-2xl p-1 w-[80px] sm:w-[100px] shrink-0 shadow-sm flex flex-col">
+                  <div className="aspect-[3/4] rounded-lg overflow-hidden">
+                    <img 
+                      src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/677785080_2477381316039291_5533075402488695679_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Xs6sOSQJX3gQ7kNvwHkz6tg&_nc_oc=AdpKd2QnrOhX2bukaGF8FEpKpxK-bui01UnJIudTc_hz-ls58Y9QC18S0QlN8XO9tkU&_nc_zt=23&_nc_ht=scontent.fhan14-5.fna&_nc_gid=XzkTbYGm1XZtRWWUQHTQRw&_nc_ss=7b2a8&oh=00_Af7KCbF3byFPHTe-WVrizfGc9TMMdp0L0dlDFFS_Jl3hWg&oe=6A0D13D8" 
+                      alt="Driver" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="text-[9px] sm:text-[10px] font-bold text-center py-1.5 text-gray-800 leading-tight">
+                    Nguyễn T. Thảo
+                  </div>
                 </div>
-                <div className="bg-white/95 rounded-xl p-2.5 shadow-sm">
-                  <p className="text-[10px] text-gray-500 uppercase font-bold">Biển số xe:</p>
-                  <p className="text-[13px] font-bold text-gray-900">29B-456.78</p>
-                </div>
-                <div className="bg-white/95 rounded-xl p-2 px-3 flex justify-between items-center shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-teal-50 flex items-center justify-center">
-                      <Phone className="w-3.5 h-3.5 text-teal-600" />
-                    </div>
-                    <div>
-                      <p className="text-[9px] text-gray-400 font-bold uppercase">Hotline Tài xế:</p>
-                      <p className="text-[11px] font-bold text-gray-800">091x.xxx.xxx</p>
+
+                {/* Thông tin chi tiết */}
+                <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 justify-center">
+                  <div className="bg-white/95 rounded-lg sm:rounded-xl p-2 sm:p-2.5 shadow-sm">
+                    <div className="flex items-center justify-between">
+                       <span className="text-[9px] sm:text-[10px] text-gray-500 uppercase font-bold">Biển số xe:</span>
+                       <span className="text-[12px] sm:text-[13px] font-bold text-gray-900">29B-456.78</span>
                     </div>
                   </div>
-                  <button className="w-8 h-8 rounded-full border border-teal-500 flex items-center justify-center">
-                    <Phone className="w-3.5 h-3.5 text-teal-600" />
-                  </button>
+                  
+                  <div className="bg-white/95 rounded-lg sm:rounded-xl p-2 sm:p-2.5 flex justify-between items-center shadow-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-teal-50 flex items-center justify-center shrink-0">
+                        <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-600" />
+                      </div>
+                      <div>
+                        <p className="text-[8px] sm:text-[9px] text-gray-400 font-bold uppercase">Hotline Tài xế:</p>
+                        <p className="text-[10px] sm:text-[11px] font-bold text-gray-800">091x.xxx.xxx</p>
+                      </div>
+                    </div>
+                    <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-teal-500 flex items-center justify-center shrink-0 active:bg-teal-50 transition-colors">
+                      <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-600" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Map Section */}
-        <div className="flex-1 relative z-0">
+        {/* === PHẦN NỬA DƯỚI: MAP VÀ CONTROLS CHUẨN 50% === */}
+        <div className="flex-1 relative z-0 bg-gray-100">
           {/* Lộ trình Badge */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] bg-[#2a6d61] text-white px-5 py-2 rounded-full text-xs font-bold shadow-lg">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[1000] bg-[#2a6d61] text-white px-4 py-1.5 rounded-full text-[11px] font-bold shadow-lg whitespace-nowrap border border-white/20">
             Lộ trình tuyến 27
           </div>
 
@@ -166,41 +167,43 @@ export default function LiveTracking() {
             center={busLocation} 
             zoom={14} 
             zoomControl={false} 
-            className="w-full h-full"
+            className="w-full h-full absolute inset-0"
           >
-            {/* TileLayer Voyager: Màu pastel giống app BusMap nhất */}
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
             
-            <Polyline positions={routePath} color="#14b8a6" weight={6} opacity={0.7} />
+            <Polyline positions={routePath} color="#14b8a6" weight={5} opacity={0.8} />
             
             <Marker position={busLocation} icon={busIcon} />
             
             <Marker position={routePath[routePath.length - 1]} icon={new L.Icon({
               iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-              iconSize: [30, 30]
+              iconSize: [28, 28]
             })} />
           </MapContainer>
 
-          {/* Floating Footer Controls */}
-          <div className="absolute bottom-6 left-4 right-4 z-[1000] space-y-2">
-            <div className="bg-[#2a6d61] text-white text-[10px] font-bold px-3 py-1 rounded-md w-max shadow-md">
+          {/* Floating Footer Controls (Thêm bottom-8 pb-4 để không dính home indicator) */}
+          <div className="absolute bottom-6 sm:bottom-8 left-4 right-4 z-[1000] flex flex-col gap-2">
+            
+            {/* Nút tracking nhỏ */}
+            <div className="bg-[#2a6d61] text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-md w-max shadow-md self-start">
               Theo dõi thời gian thực
             </div>
 
             {/* Progress Bar Box */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-gray-100">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl border border-gray-100">
               <div className="flex justify-between items-center mb-2">
-                <p className="text-xs font-bold text-gray-700">Trạm đã qua: 6 | Còn 12 trạm</p>
+                <p className="text-[11px] sm:text-xs font-bold text-gray-700">Trạm đã qua: 6 | Còn 12 trạm</p>
+                {/* Bạn có 2 nút GẦN TỚI ĐIỂM XUỐNG, mình đã chỉnh lại nút này nhỏ gọn hơn */}
                 <button 
                   onClick={() => setShowRatingModal(true)}
-                  className="bg-[#2a6d61] text-white px-3 py-1.5 rounded-lg text-[10px] font-bold"
+                  className="bg-[#2a6d61] text-white px-2.5 py-1.5 rounded-md text-[9px] sm:text-[10px] font-bold active:scale-95 transition-transform"
                 >
-                  GẦN TỚI ĐIỂM XUỐNG
+                  BÁO XUỐNG
                 </button>
               </div>
-              <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 sm:h-2 bg-gray-200 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: '33%' }}
@@ -213,7 +216,7 @@ export default function LiveTracking() {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowRatingModal(true)}
-              className="w-full bg-[#2a6d61] text-white py-4 rounded-2xl font-bold text-[14px] shadow-lg"
+              className="w-full bg-[#2a6d61] text-white py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[13px] sm:text-[14px] shadow-lg"
             >
               GẦN TỚI ĐIỂM XUỐNG
             </motion.button>
@@ -224,10 +227,21 @@ export default function LiveTracking() {
         <RatingModal
           isOpen={showRatingModal}
           onClose={() => setShowRatingModal(false)}
-          driverName="Nguyễn Văn Nam"
+          driverName="Nguyễn Thanh Thảo"
           onSubmit={(r) => console.log(r)}
         />
       </div>
+      
+      {/* CSS ẩn thanh cuộn cho khu vực Info nhưng vẫn vuốt được */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+      `}</style>
     </Layout>
   );
 }
