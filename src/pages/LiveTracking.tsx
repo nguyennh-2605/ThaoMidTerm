@@ -157,7 +157,7 @@ export default function LiveTracking() {
                       </div>
                       <div>
                         <p className="text-[8px] sm:text-[9px] text-gray-400 font-bold uppercase">Hotline Tài xế:</p>
-                        <p className="text-[10px] sm:text-[11px] font-bold text-gray-800">091x.xxx.xxx</p>
+                        <p className="text-[10px] sm:text-[11px] font-bold text-gray-800">1900 1296</p>
                       </div>
                     </div>
                     <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-teal-500 flex items-center justify-center shrink-0 active:bg-teal-50 transition-colors">
