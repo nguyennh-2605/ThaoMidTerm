@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion'; // Thêm AnimatePresence
+import { motion } from 'framer-motion';
 import { ArrowLeft, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -33,9 +33,6 @@ export default function LiveTracking() {
   const navigate = useNavigate();
   const [timeToNextStop] = useState(2);
   const [showRatingModal, setShowRatingModal] = useState(false);
-  
-  // Thêm state để kiểm tra xem đã gần tới trạm cuối chưa
-  const [isNearDestination, setIsNearDestination] = useState(false);
 
   const [busLocation, setBusLocation] = useState<LatLngTuple>(routePath[0]);
 
@@ -43,7 +40,7 @@ export default function LiveTracking() {
     let currentSegment = 0;
     let progress = 0;     
     const speed = 0.003;   
-    let lastIsNear = false; // Biến cục bộ để tránh re-render liên tục
+    let lastIsNear = false; // Biến cục bộ để kiểm soát việc bật modal 1 lần duy nhất
 
     const animateBus = () => {
       if (currentSegment >= routePath.length - 1) {
@@ -61,14 +58,15 @@ export default function LiveTracking() {
 
       progress += speed;
 
-      // Logic kiểm tra gần tới trạm cuối:
-      // Kích hoạt khi xe đang ở đoạn đường cuối cùng (segment cuối) và đi được > 20% đoạn đó
+      // Kích hoạt khi xe đang ở đoạn đường cuối cùng và đi được > 20%
       const currentlyNear = currentSegment === routePath.length - 2 && progress > 0.2;
       
-      // Chỉ set lại state nếu trạng thái thay đổi (tránh re-render 60 frame/s)
+      // Nếu trạng thái thay đổi từ false -> true (vừa mới đi vào vùng đích)
       if (currentlyNear !== lastIsNear) {
         lastIsNear = currentlyNear;
-        setIsNearDestination(currentlyNear);
+        if (currentlyNear) {
+          setShowRatingModal(true); // Bật thẳng popup modal lên
+        }
       }
 
       if (progress >= 1) {
@@ -226,22 +224,8 @@ export default function LiveTracking() {
                 />
               </div>
             </div>
-
-            {/* Main Action Button (Chỉ hiện ra khi gần tới nơi) */}
-            <AnimatePresence>
-              {isNearDestination && (
-                <motion.button
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 30, scale: 0.95 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setShowRatingModal(true)}
-                  className="w-full bg-[#2a6d61] text-white py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[13px] sm:text-[14px] shadow-lg mt-1"
-                >
-                  GẦN TỚI ĐIỂM XUỐNG
-                </motion.button>
-              )}
-            </AnimatePresence>
+            
+            {/* ĐÃ BỎ NÚT "GẦN TỚI ĐIỂM XUỐNG" VÀ ANIMATEPRESENCE TẠI ĐÂY */}
           </div>
         </div>
 
