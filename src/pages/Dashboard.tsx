@@ -49,7 +49,7 @@ export default function Dashboard() {
 
             {/* Logo TRAMOC & Hotline */}
             <div className="text-cyan-800 font-extrabold text-lg italic tracking-wider drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-              THAONGU
+              NHÓM 4
             </div>
           </div>
 
@@ -58,7 +58,7 @@ export default function Dashboard() {
               href="tel:69696969696" 
               className="flex items-center gap-1 text-[11px] text-white border border-white/40 rounded-full px-3 py-1.5 backdrop-blur-md bg-black/30 shadow-sm"
             >
-              📞 69696969696
+              📞 0123456789
             </a>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function Dashboard() {
               <div className="bg-gradient-to-br from-red-700 to-red-900 rounded-[20px] h-32 overflow-hidden relative shadow-sm">
                 <div className="absolute inset-0 bg-black/30" />
                 <p className="absolute bottom-3 left-3 text-white font-bold text-[11px] uppercase tracking-wide">
-                  PHÓNG MIỀN NAM<br/>G NHẤT ĐẤT NƯỚC
+                  GIẢI PHÓNG MIỀN NAM<br/>THỐNG NHẤT ĐẤT NƯỚC
                 </p>
               </div>
               <div 

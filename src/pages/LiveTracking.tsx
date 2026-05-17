@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // Thêm AnimatePresence
 import { ArrowLeft, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
@@ -9,6 +9,8 @@ import RatingModal from '../components/support/RatingModal';
 import { MapContainer, TileLayer, Polyline, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L, { type LatLngTuple } from 'leaflet';
+
+import driver from '../assets/drive.jpg';
 
 // Thiết lập Icon xe buýt cho bản đồ
 const busIcon = new L.DivIcon({
@@ -31,6 +33,9 @@ export default function LiveTracking() {
   const navigate = useNavigate();
   const [timeToNextStop] = useState(2);
   const [showRatingModal, setShowRatingModal] = useState(false);
+  
+  // Thêm state để kiểm tra xem đã gần tới trạm cuối chưa
+  const [isNearDestination, setIsNearDestination] = useState(false);
 
   const [busLocation, setBusLocation] = useState<LatLngTuple>(routePath[0]);
 
@@ -38,6 +43,7 @@ export default function LiveTracking() {
     let currentSegment = 0;
     let progress = 0;     
     const speed = 0.003;   
+    let lastIsNear = false; // Biến cục bộ để tránh re-render liên tục
 
     const animateBus = () => {
       if (currentSegment >= routePath.length - 1) {
@@ -54,6 +60,16 @@ export default function LiveTracking() {
       setBusLocation([lat, lng] as LatLngTuple);
 
       progress += speed;
+
+      // Logic kiểm tra gần tới trạm cuối:
+      // Kích hoạt khi xe đang ở đoạn đường cuối cùng (segment cuối) và đi được > 20% đoạn đó
+      const currentlyNear = currentSegment === routePath.length - 2 && progress > 0.2;
+      
+      // Chỉ set lại state nếu trạng thái thay đổi (tránh re-render 60 frame/s)
+      if (currentlyNear !== lastIsNear) {
+        lastIsNear = currentlyNear;
+        setIsNearDestination(currentlyNear);
+      }
 
       if (progress >= 1) {
         progress = 0;
@@ -117,13 +133,13 @@ export default function LiveTracking() {
                 <div className="bg-white rounded-xl sm:rounded-2xl p-1 w-[80px] sm:w-[100px] shrink-0 shadow-sm flex flex-col">
                   <div className="aspect-[3/4] rounded-lg overflow-hidden">
                     <img 
-                      src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/677785080_2477381316039291_5533075402488695679_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Xs6sOSQJX3gQ7kNvwHkz6tg&_nc_oc=AdpKd2QnrOhX2bukaGF8FEpKpxK-bui01UnJIudTc_hz-ls58Y9QC18S0QlN8XO9tkU&_nc_zt=23&_nc_ht=scontent.fhan14-5.fna&_nc_gid=XzkTbYGm1XZtRWWUQHTQRw&_nc_ss=7b2a8&oh=00_Af7KCbF3byFPHTe-WVrizfGc9TMMdp0L0dlDFFS_Jl3hWg&oe=6A0D13D8" 
+                      src={driver}
                       alt="Driver" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="text-[9px] sm:text-[10px] font-bold text-center py-1.5 text-gray-800 leading-tight">
-                    Nguyễn T. Thảo
+                    Nguyễn Văn Nam
                   </div>
                 </div>
 
@@ -183,7 +199,7 @@ export default function LiveTracking() {
             })} />
           </MapContainer>
 
-          {/* Floating Footer Controls (Thêm bottom-8 pb-4 để không dính home indicator) */}
+          {/* Floating Footer Controls */}
           <div className="absolute bottom-6 sm:bottom-8 left-4 right-4 z-[1000] flex flex-col gap-2">
             
             {/* Nút tracking nhỏ */}
@@ -195,7 +211,6 @@ export default function LiveTracking() {
             <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl border border-gray-100">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-[11px] sm:text-xs font-bold text-gray-700">Trạm đã qua: 6 | Còn 12 trạm</p>
-                {/* Bạn có 2 nút GẦN TỚI ĐIỂM XUỐNG, mình đã chỉnh lại nút này nhỏ gọn hơn */}
                 <button 
                   onClick={() => setShowRatingModal(true)}
                   className="bg-[#2a6d61] text-white px-2.5 py-1.5 rounded-md text-[9px] sm:text-[10px] font-bold active:scale-95 transition-transform"
@@ -212,14 +227,21 @@ export default function LiveTracking() {
               </div>
             </div>
 
-            {/* Main Action Button */}
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setShowRatingModal(true)}
-              className="w-full bg-[#2a6d61] text-white py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[13px] sm:text-[14px] shadow-lg"
-            >
-              GẦN TỚI ĐIỂM XUỐNG
-            </motion.button>
+            {/* Main Action Button (Chỉ hiện ra khi gần tới nơi) */}
+            <AnimatePresence>
+              {isNearDestination && (
+                <motion.button
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowRatingModal(true)}
+                  className="w-full bg-[#2a6d61] text-white py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[13px] sm:text-[14px] shadow-lg mt-1"
+                >
+                  GẦN TỚI ĐIỂM XUỐNG
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
@@ -227,7 +249,7 @@ export default function LiveTracking() {
         <RatingModal
           isOpen={showRatingModal}
           onClose={() => setShowRatingModal(false)}
-          driverName="Nguyễn Thanh Thảo"
+          driverName="Nguyễn Văn Nam"
           onSubmit={(r) => console.log(r)}
         />
       </div>

@@ -7,8 +7,8 @@ import Button from '../components/common/Button';
 
 const mockStops = [
   { id: 's0', name: 'Cổng ĐH Giao thông' },
-  { id: 's1', name: 'Ngã tư Trần Duy Hưng', price: 2000 },
-  { id: 's2', name: 'BigC Thăng Long', price: 3000 },
+  { id: 's1', name: 'Ngã tư Trần Duy Hưng', price: 9000 },
+  { id: 's2', name: 'BigC Thăng Long', price: 9000 },
   { id: 's3', name: 'Cầu Giấy', price: 9000 },
   { id: 's4', name: 'Đạp Thú', price: 9000 }, 
   { id: 's5', name: 'Trạm 5: Nhổn', price: 9000 }, 
