@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Leaf, Bus, Info, Shield, ChevronRight, Bot, Star, Trophy } from 'lucide-react';
+import { ArrowLeft, Leaf, Bus, Info, ChevronRight, Bot, Star, Trophy } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import { useGamification } from '../hooks/useGamification';
