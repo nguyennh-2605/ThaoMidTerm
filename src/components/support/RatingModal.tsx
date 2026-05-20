@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, X, Check, AlertTriangle } from 'lucide-react';
 import Modal from '../common/Modal';
+import { useGamification } from '../../hooks/useGamification';
 
 interface RatingModalProps {
   isOpen: boolean;
@@ -15,12 +16,14 @@ export default function RatingModal({ isOpen, onClose, driverName, onSubmit }: R
   const [driverRating, setDriverRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const { completeFeedback } = useGamification();
 
   const tripTags = ['Đúng giờ', 'Sạch sẽ', 'Thoải mái'];
   const driverTags = ['Thân thiện', 'Lái an toàn', 'Vui vẻ'];
 
   const handleSubmit = () => {
     onSubmit({ tripRating, driverRating, feedback, tags: selectedTags });
+    completeFeedback(); // Trigger gamification update
     onClose();
   };
 

@@ -225,7 +225,6 @@ export default function LiveTracking() {
               </div>
             </div>
             
-            {/* ĐÃ BỎ NÚT "GẦN TỚI ĐIỂM XUỐNG" VÀ ANIMATEPRESENCE TẠI ĐÂY */}
           </div>
         </div>
 

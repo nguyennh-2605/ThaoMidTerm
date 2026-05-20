@@ -7,6 +7,8 @@ import Profile from './pages/Profile';
 import Support from './pages/Support';
 import Notifications from './pages/Notifications';
 import Favorites from './pages/Favorites';
+import GreenJourney from './pages/GreenJourney';
+import AIChat from './pages/AIChat';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/support" element={<Support />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/green-journey" element={<GreenJourney />} />
+        <Route path="/ai-chat" element={<AIChat />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
