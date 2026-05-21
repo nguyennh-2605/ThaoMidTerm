@@ -104,7 +104,7 @@ export default function Dashboard() {
               <div className="flex flex-col gap-1 pr-2">
                 <span className="text-[9px] text-gray-600 font-medium">CO₂ đã giảm</span>
                 <span className="text-sm font-bold text-teal-600">{state.co2Reduced} <span className="text-[10px] font-normal">kg</span></span>
-                <span className="text-[8px] text-gray-500">≈ 3 cây xanh</span>
+                <span className="text-[8px] text-gray-500">≈ {state.treeSaved} cây xanh</span>
               </div>
               <div className="flex flex-col gap-1 px-2">
                 <span className="text-[9px] text-gray-600 font-medium">Tiết kiệm được</span>

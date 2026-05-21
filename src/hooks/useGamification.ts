@@ -8,6 +8,7 @@ interface JourneyItem {
 }
 
 export interface GamificationState {
+  treeSaved: number;
   co2Reduced: number;
   moneySaved: number;
   totalDistance: number;
@@ -17,6 +18,7 @@ export interface GamificationState {
 }
 
 const INITIAL_STATE: GamificationState = {
+  treeSaved: 2,
   co2Reduced: 2.88,
   moneySaved: 48000,
   totalDistance: 32,
@@ -39,6 +41,7 @@ const INITIAL_STATE: GamificationState = {
 };
 
 const UPDATED_STATE: GamificationState = {
+  treeSaved: 3,
   co2Reduced: 4.5,
   moneySaved: 75000,
   totalDistance: 50,
