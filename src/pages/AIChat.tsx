@@ -240,7 +240,12 @@ export default function AIChat() {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.7 + index * 0.2 }}
-                                className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100"
+                                onClick={() => {
+                                  if (route.number === '08') {
+                                    navigate('/payment');
+                                  }
+                                }}
+                                className={`bg-white rounded-2xl p-4 shadow-sm border border-gray-100 ${route.number === '08' ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
                               >
                                 <div className="flex items-start gap-3 mb-3">
                                   <div className={`w-8 h-8 ${route.badgeColor} rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>

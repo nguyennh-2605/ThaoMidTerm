@@ -7,14 +7,6 @@ import { useState } from 'react';
 import Fireworks from '../components/common/Fireworks';
 import busImage from '../assets/bus.webp';
 
-// Dữ liệu lịch sử hành trình cập nhật chính xác theo ảnh bài đăng
-const journeyHistory = [
-  { date: '16/05/2024', label: 'Hôm nay', distance: '6.2 km', co2: '+2.1 kg CO₂' },
-  { date: '14/05/2024', label: '14/05/2024', distance: '4.8 km', co2: '+1.6 kg CO₂' },
-  { date: '13/05/2024', label: '13/05/2024', distance: '7.1 km', co2: '+2.4 kg CO₂' },
-  { date: '12/05/2024', label: '12/05/2024', distance: '5.3 km', co2: '+1.8 kg CO₂' },
-];
-
 export default function GreenJourney() {
   const navigate = useNavigate();
   const { state } = useGamification();
@@ -225,7 +217,7 @@ export default function GreenJourney() {
             </div>
 
             <div className="divide-y divide-gray-50">
-              {journeyHistory.map((journey, index) => (
+              {state.journeyHistory.map((journey, index) => (
                 <div key={index} className="flex items-center justify-between py-3 first:pt-1 last:pb-1">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600">

@@ -174,7 +174,7 @@ export default function LiveTracking() {
         <div className="flex-1 relative z-0 bg-gray-100">
           {/* Lộ trình Badge */}
           <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[1000] bg-[#2a6d61] text-white px-4 py-1.5 rounded-full text-[11px] font-bold shadow-lg whitespace-nowrap border border-white/20">
-            Lộ trình tuyến 27
+            Lộ trình tuyến 08
           </div>
 
           <MapContainer 
@@ -208,7 +208,7 @@ export default function LiveTracking() {
             {/* Progress Bar Box */}
             <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl border border-gray-100">
               <div className="flex justify-between items-center mb-2">
-                <p className="text-[11px] sm:text-xs font-bold text-gray-700">Trạm đã qua: 6 | Còn 12 trạm</p>
+                <p className="text-[11px] sm:text-xs font-bold text-gray-700">Trạm đã qua: 6 | Còn 4 trạm</p>
                 <button 
                   onClick={() => setShowRatingModal(true)}
                   className="bg-[#2a6d61] text-white px-2.5 py-1.5 rounded-md text-[9px] sm:text-[10px] font-bold active:scale-95 transition-transform"

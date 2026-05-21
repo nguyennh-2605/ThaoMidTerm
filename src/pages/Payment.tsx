@@ -6,12 +6,11 @@ import Layout from '../components/layout/Layout';
 import Button from '../components/common/Button';
 
 const mockStops = [
-  { id: 's0', name: 'Cổng ĐH Giao thông' },
-  { id: 's1', name: 'Ngã tư Trần Duy Hưng', price: 9000 },
-  { id: 's2', name: 'BigC Thăng Long', price: 9000 },
-  { id: 's3', name: 'Cầu Giấy', price: 9000 },
-  { id: 's4', name: 'Đạp Thú', price: 9000 }, 
-  { id: 's5', name: 'Trạm 5: Nhổn', price: 9000 }, 
+  { id: 's0', name: 'Trạm FTU (Cổng chính)' },
+  { id: 's1', name: 'Trạm Kim Mã', price: 9000 },
+  { id: 's2', name: 'Trạm Nhà Hát Lớn', price: 9000 },
+  { id: 's3', name: 'Trạm Ô Quan Chưởng', price: 9000 },
+  { id: 's4', name: 'AEON Mall Long Biên', price: 9000 }, 
 ];
 
 // Component Hộp thoại Thanh toán MoMo Giả lập (Đã thiết kế Responsive)
@@ -207,7 +206,7 @@ export default function Payment() {
         {/* Timeline Hành Trình */}
         <div className="px-4 py-6">
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-            <h2 className="text-[16px] sm:text-[17px] font-bold text-gray-900 ml-2">Tuyến số 9: Trạm tiếp theo</h2>
+            <h2 className="text-[16px] sm:text-[17px] font-bold text-gray-900 ml-2">Tuyến số 08: Trạm tiếp theo</h2>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="relative">
